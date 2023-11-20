@@ -59,6 +59,7 @@ class sparse(nn.Module):
 class lowrank(nn.Module):
     def __init__(self):
         super(lowrank, self).__init__()
+        self.thres_coef = Variable(torch.tensor(-2, dtype=torch.float32), requires_grad=True)
     def forward(self, weight, Upre, Vpre, Dpre, Tpre, LRHS):
         Z = (1 / (weight + weight)) * (Upre + Vpre + weight * (LRHS - Dpre) + weight * Tpre)
         Ut, St, Vt = torch.linalg.svd(Z, full_matrices=False)
